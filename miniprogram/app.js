@@ -1,7 +1,9 @@
 //app.js
 App({
     globalData: {
-        recordValue: "" // 利用这个变量来确定正在录制哪段文字
+        recordValue: "", // 利用这个变量来确定正在录制哪段文字
+        openId: "", // 用户唯一标识符
+        nickName: "", // 用户id
     },
     onLaunch: function () {
         if (!wx.cloud) {
@@ -19,4 +21,8 @@ App({
 
         this.globalData = {}
     }
+})
+
+wx.cloud.init({
+    env: "voice-collect-2g7jf1mv64819153"
 })

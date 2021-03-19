@@ -7,45 +7,20 @@
     height: 120rpx;
 }
 
-/* pages/index/release/release.wxss */
-.microphone {
-    position: fixed;
-    left: 250rpx;
-    bottom: 0;
-    height: 240rpx;
-    width: 240rpx;
-    border-radius: 20rpx;
-    margin: 50% auto;
-    background: #26A5FF;
-}
-
-
-.board {
-    overflow: hidden;
-    border-bottom: 2rpx solid #26A5FF;
-}
-
-/*列布局*/
-.cell {
-    display: flex;
-    margin: 20rpx;
-}
-
-.cell-hd {
-    margin-left: 10rpx;
-    color: #885A38;
-}
-
-.cell .cell-bd {
-    flex: 1;
+.recordRes {
     position: relative;
-
+    align-content: center;
+    width: 100%;
+    height: 120rpx;
+    font-size: 60rpx;
 }
 
-/**只显示一行*/
-.date {
-    font-size: 30rpx;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+.recordValue {
+    /* writing-mode: vertical-lr; */
+    /* margin-left: 320rpx; */
+    /* text-orientation: sideways-right; */
+    padding-left: 50rpx;
+    margin-top: 100rpx;
+    width: 100%;
+    font-size: 80rpx;
 }

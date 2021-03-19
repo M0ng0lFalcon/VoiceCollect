@@ -1,4 +1,4 @@
 <mp-cells ext-class="my-cells" title="信息列表">
-    <mp-cell wx:for="{{textLi}}" link hover value="{{item.text}}" bindtap="gotoRecord" data-key="{{item.value}}">
+    <mp-cell wx:for="{{textLi}}" link hover value="{{item.value}}" bindtap="gotoRecord" data-key="{{item.value}}">
     </mp-cell>
 </mp-cells>

@@ -1,18 +1,13 @@
 // miniprogram/pages/index/index.js
 var app = getApp()
+const db = wx.cloud.database()
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        textLi: [{
-            text: "测试 1",
-            value: "测试句子1"
-        },{
-            text: "测试 2",
-            value: "测试句子2"
-        }]
+        textLi: []
     },
 
     gotoRecord: function(e) {
@@ -28,7 +23,21 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        var _this = this;
+        console.log("check database")
+        db.collection("VoiceData").get({
+            success: res => {
+                console.log("database: ok")
+                console.log(res.data)
+                this.setData({
+                    textLi: res.data
+                })
+            },
+            fail: err => {
+                console.log(err)
+            }
+        })
+        console.log(this.data.textLi)
     },
 
     /**

@@ -2,7 +2,7 @@
     "miniprogramRoot": "miniprogram/",
     "cloudfunctionRoot": "cloudfunctions/",
     "setting": {
-        "urlCheck": true,
+        "urlCheck": false,
         "es6": true,
         "enhance": true,
         "postcss": true,
@@ -10,7 +10,7 @@
         "minified": true,
         "newFeature": true,
         "coverView": true,
-        "nodeModules": false,
+        "nodeModules": true,
         "autoAudits": false,
         "showShadowRootInWxmlPanel": true,
         "scopeDataCheck": false,
@@ -40,6 +40,7 @@
     "appid": "wxff581adaf547f954",
     "projectname": "VoiceCollect",
     "libVersion": "2.14.1",
+    "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
     "condition": {
         "search": {
             "list": []

@@ -1,5 +1,7 @@
 // miniprogram/pages/index/index.js
 var app = getApp()
+const db = wx.cloud.database()
+const _ = db.command
 Page({
 
     /**
@@ -8,74 +10,60 @@ Page({
     data: {
         record_class: "weui-btn weui-btn_primary",
         record_text: "开始录音",
+        tempFilePath: "",
         voices: [],
         slideButtons: [{
-            text: '删除',
-            type: 'warn'
-        }, {
             text: '提交',
-            type: 'default'
+            type: 'warn'
         }],
-        recordValue: ""
+        recordValue: "",
+    },
+
+    recordingTimer: function () {
+        var that = this;
+        //将计时器赋值给setInter
+        that.data.setInter = setInterval(
+            function () {
+                var time = that.data.recordingTimeqwe + 1;
+                if (time > 60) {
+                    wx.showToast({
+                        title: '录音时长到一分钟啦',
+                        duration: 1500,
+                        mask: true
+                    })
+                    clearInterval(that.data.setInter);
+                    that.shutRecording();
+                    return;
+                }
+                that.setData({
+                    recordingTimeqwe: time
+                })
+            }, 1000);
     },
 
     touchDown: function () {
+        var _this = this;
         console.log("手指按下")
         this.setData({
             record_class: "weui-btn weui-btn_default",
             record_text: "录音中"
         })
 
-        var _this = this;
         wx.startRecord({
             success: (res) => {
                 // 录音文件的临时路径
                 var tempFilePath = res.tempFilePath;
-                console.log("tempFilePath: " + tempFilePath)
-
-                // 持久保存录音文件
-                wx.saveFile({
-                    tempFilePath: tempFilePath,
-                    success: function (res) {
-                        // 保存后的路径
-                        var savedFilePath = res.savedFilePath
-                        console.log("savedFilePath: " + savedFilePath)
-
-                    }
+                _this.setData({
+                    tempFilePath: res.tempFilePath
                 })
+                console.log("tempFilePath: " + _this.data.tempFilePath)
+
 
                 // 弹窗提示
                 wx.showToast({
                     title: '录音成功',
                     icon: 'success',
                     duration: 1000
-                })
-
-                // 获取录音音频列表
-                wx.getSavedFileList({
-                    success: function (res) {
-                        var voices = [];
-                        var len = res.fileList.length;
-                        for (var i = 0; i < len; i++) {
-                            //格式化时间 
-                            var createTime = res.fileList[i].createTime
-                            //将音频大小B转为KB 
-                            var size = (res.fileList[i].size / 1024).toFixed(2);
-                            var voice = {
-                                filePath: res.fileList[i].filePath,
-                                createTime: createTime,
-                                size: size,
-                                id: i + 1
-                            };
-                            // console.log("文件路径: " + res.fileList[i].filePath)
-                            // console.log("文件时间: " + createTime)
-                            // console.log("文件大小: " + size)
-                            voices = voices.concat(voice);
-                        }
-                        _this.setData({
-                            voices: voices
-                        })
-                    }
                 })
             },
             fail: function (res) {
@@ -106,6 +94,7 @@ Page({
             icon: 'success',
             duration: 500
         })
+        // innerAudioContext.play(this.data.tempFilePath)
         wx.playVoice({
             filePath: filePath,
             success: function () {
@@ -119,13 +108,37 @@ Page({
     },
 
     slideBtnTap: function (e) {
-        if(e.detail.index == 0) {
-            console.log('del')
-        } else {
-            console.log('submit')
-        }
-        console.log(e.detail)
-        console.log(e.currentTarget.dataset.key)
+        // console.log(e.currentTarget.dataset.key)
+        var filePath = e.currentTarget.dataset.key
+        var timestamp = Date.parse(new Date())
+        var date = new Date(timestamp)
+        // 年
+        var Y = date.getFullYear();
+        //月  
+        var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+        //日  
+        var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+        //时  
+        var h = date.getHours();
+        //分  
+        var m = date.getMinutes();
+        //秒  
+        var s = date.getSeconds();
+        var fileName = String(Y + M + D + h + m + s) + '.silk'
+
+        wx.cloud.uploadFile({
+            cloudPath: 'recordVoice/' + fileName,
+            filePath: filePath,
+            success: res => {
+                console.log(res.fileID)
+
+                wx.showToast({
+                    title: '提交成功',
+                    icon: 'success',
+                    duration: 1000
+                })
+            }
+        })
     },
 
     /**
