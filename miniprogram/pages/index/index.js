@@ -1,6 +1,9 @@
 // miniprogram/pages/index/index.js
 var app = getApp()
 const db = wx.cloud.database()
+wx.cloud.init({
+    env: "voice-collect-2g7jf1mv64819153"
+})
 Page({
 
     /**
@@ -38,6 +41,14 @@ Page({
             }
         })
         console.log(this.data.textLi)
+        wx.cloud.callFunction({
+            // 云函数名称
+            name: 'testUpdate',
+            success: function(res) {
+              console.log("res:", res.result)
+            },
+            fail: console.error
+          })
     },
 
     /**
