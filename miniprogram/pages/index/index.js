@@ -1,9 +1,7 @@
 // miniprogram/pages/index/index.js
 var app = getApp()
 const db = wx.cloud.database()
-wx.cloud.init({
-    env: "voice-collect-2g7jf1mv64819153"
-})
+
 Page({
 
     /**
@@ -13,12 +11,12 @@ Page({
         textLi: []
     },
 
-    gotoRecord: function(e) {
+    gotoRecord: function (e) {
         var recordValue = e.currentTarget.dataset.key
         console.log(recordValue)
         app.globalData.recordValue = recordValue
         wx.navigateTo({
-          url: '../record/record',
+            url: '../record/record',
         })
     },
 
@@ -41,14 +39,6 @@ Page({
             }
         })
         console.log(this.data.textLi)
-        wx.cloud.callFunction({
-            // 云函数名称
-            name: 'testUpdate',
-            success: function(res) {
-              console.log("res:", res.result)
-            },
-            fail: console.error
-          })
     },
 
     /**
