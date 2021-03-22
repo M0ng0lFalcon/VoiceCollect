@@ -26,19 +26,19 @@ Page({
     onLoad: function (options) {
         var _this = this;
         console.log("check database")
-        db.collection("VoiceData").get({
-            success: res => {
-                console.log("database: ok")
-                console.log(res.data)
-                this.setData({
-                    textLi: res.data
+        // cloud function : GetVoices
+        wx.cloud.callFunction({
+            name: 'GetVoices',
+            success: function(res) {
+                // console.log("GetVoices success:", res)
+                _this.setData({
+                    textLi: res.result.data
                 })
             },
-            fail: err => {
-                console.log(err)
+            fail: function(err) {
+                console.log("GetVoices err:", err)
             }
         })
-        console.log(this.data.textLi)
     },
 
     /**

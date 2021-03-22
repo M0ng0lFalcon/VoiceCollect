@@ -16,7 +16,7 @@ Page({
             text: '提交',
             type: 'warn'
         }],
-        recordValue: "",
+        recordValue: ""
     },
 
     recordingTimer: function () {
@@ -130,8 +130,19 @@ Page({
             cloudPath: 'recordVoice/' + fileName,
             filePath: filePath,
             success: res => {
-                console.log(res.fileID)
-
+                console.log("fileId:", res.fileID)
+                wx.cloud.callFunction({
+                    name: 'AddVoice',
+                    data: {
+                        voice: res.fileID
+                    },
+                    success: function(res) {
+                        console.log("[!] Update database successfully")
+                    },
+                    fail: function(err) {
+                        console.log(err)
+                    }
+                })
                 wx.showToast({
                     title: '提交成功',
                     icon: 'success',
@@ -139,6 +150,7 @@ Page({
                 })
             }
         })
+
     },
 
     /**
