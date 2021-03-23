@@ -41,6 +41,20 @@ Page({
         })
     },
 
+    startT: function() {
+        wx.showToast({
+          title: 'test',
+          icon: 'loading',
+          duration: 60000
+        })
+    },
+
+    stopT: function() {
+        wx.hideToast({
+          success: (res) => {},
+        })
+    },
+
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
