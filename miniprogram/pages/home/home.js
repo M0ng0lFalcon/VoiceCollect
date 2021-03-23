@@ -1,10 +1,22 @@
-var app = getApp()
-const db = wx.cloud.database()
 Page({
     data: {
         //判断小程序的API，回调，参数，组件等是否在当前版本可用。
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
         isHide: false,
+        voices: []
+    },
+
+    onShow: function () {
+        var that = this
+        wx.cloud.callFunction({
+            name: 'GetUploadedVoice',
+            success: function (res) {
+                console.log(res.result.data[0].voices)
+                that.setData({
+                    voices: res.result.data[0].voices
+                })
+            }
+        })
     },
 
     onLoad: function () {
@@ -27,6 +39,27 @@ Page({
                 }
             }
         });
+    },
+
+    gotoPlay: function (e) {
+        var filePath = e.currentTarget.dataset.key;
+        //点击开始播放 
+        wx.showToast({
+            title: '开始播放',
+            icon: 'success',
+            duration: 500
+        })
+        // innerAudioContext.play(this.data.tempFilePath)
+        wx.playVoice({
+            filePath: filePath,
+            success: function () {
+                wx.showToast({
+                    title: '播放结束',
+                    icon: 'success',
+                    duration: 500
+                })
+            }
+        })
     },
 
     bindGetUserInfo: function (e) {

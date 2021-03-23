@@ -30,7 +30,7 @@ Page({
         wx.cloud.callFunction({
             name: 'GetVoices',
             success: function(res) {
-                // console.log("GetVoices success:", res)
+                console.log("GetVoices success:", res)
                 _this.setData({
                     textLi: res.result.data
                 })

@@ -18,7 +18,10 @@ exports.main = async (event, context) => {
             _openid: OPENID
         }).update({
             data: {
-                voices: _.push(event.voice)
+                voices: _.push({
+                    voice: event.voice,
+                    recordValue: event.recordValue
+                })
             },
             success: res => {
                 console.log(res)

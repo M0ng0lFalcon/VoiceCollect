@@ -116,13 +116,13 @@ Page({
         var Y = date.getFullYear();
         //月  
         var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
-        //日  
+        // 日  
         var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-        //时  
+        // 时  
         var h = date.getHours();
-        //分  
+        // 分
         var m = date.getMinutes();
-        //秒  
+        // 秒
         var s = date.getSeconds();
         var fileName = String(Y + M + D + h + m + s) + '.silk'
 
@@ -131,10 +131,13 @@ Page({
             filePath: filePath,
             success: res => {
                 console.log("fileId:", res.fileID)
+
+                // 文件上传成功后添加到用户数据库当中
                 wx.cloud.callFunction({
                     name: 'AddVoice',
                     data: {
-                        voice: res.fileID
+                        voice: res.fileID,
+                        recordValue: app.globalData.recordValue
                     },
                     success: function(res) {
                         console.log("[!] Update database successfully")
