@@ -1,9 +1,4 @@
 /* miniprogram/pages/index/index.wxss */
-@font-face {
-    font-family: 'mnglwhiteotf';
-    src: url('/miniprogram/font/mnglwhiteotf.ttf')
-}
-
 #recordBtn {
     position: fixed;
     bottom: 0;
@@ -24,8 +19,10 @@
     writing-mode: vertical-lr;
     text-orientation: sideways-right;
     -webkit-text-orientation: sideways-right;
-    font-family: 'mnglwhiteotf';
     margin: 0 auto;
+    margin-top: 50rpx;
+    display: flex;
+    align-items: center;
     word-wrap: break-word;
     word-break: break-all;
     width: 100%;
