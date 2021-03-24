@@ -2,5 +2,3 @@
     <mp-cell wx:for="{{textLi}}" link hover value="{{item.value}}" bindtap="gotoRecord" data-key="{{item.value}}">
     </mp-cell>
 </mp-cells>
-
-<button bindtouchstart="startT" bindtouchend="stopT">close</button>

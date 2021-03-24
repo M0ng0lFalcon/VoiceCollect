@@ -48,6 +48,11 @@ Page({
             record_class: "weui-btn weui-btn_default",
             record_text: "录音中"
         })
+        wx.showToast({
+            title: '正在录音',
+            icon: 'loading',
+            duration: 60000
+        })
 
         wx.startRecord({
             success: (res) => {
@@ -59,12 +64,12 @@ Page({
                 console.log("tempFilePath: " + _this.data.tempFilePath)
 
 
-                // 弹窗提示
-                wx.showToast({
-                    title: '录音成功',
-                    icon: 'success',
-                    duration: 1000
-                })
+                // // 弹窗提示
+                // wx.showToast({
+                //     title: '录音成功',
+                //     icon: 'success',
+                //     duration: 1000
+                // })
             },
             fail: function (res) {
                 wx.showModal({
@@ -84,6 +89,9 @@ Page({
         })
 
         wx.stopRecord()
+        wx.hideToast({
+          success: (res) => {},
+        })
     },
 
     gotoPlay: function (e) {
@@ -139,10 +147,10 @@ Page({
                         voice: res.fileID,
                         recordValue: app.globalData.recordValue
                     },
-                    success: function(res) {
+                    success: function (res) {
                         console.log("[!] Update database successfully")
                     },
-                    fail: function(err) {
+                    fail: function (err) {
                         console.log(err)
                     }
                 })

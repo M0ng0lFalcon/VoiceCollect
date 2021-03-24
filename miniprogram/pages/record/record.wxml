@@ -1,4 +1,6 @@
-<view class="recordValue">{{recordValue}}</view>
+<view class="recordValue">
+    <text>{{recordValue}}</text>
+</view>
 
 
 <mp-cells ext-class="my-cells" title="结果">
